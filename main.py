@@ -26,6 +26,7 @@ def setup_logger(log_path: str) -> logging.Logger:
     logger = logging.getLogger("ModelEval")
     logger.setLevel(logging.INFO)
 
+    # Avoid duplicated handlers when the logger is initialized multiple times
     if logger.handlers:
         logger.handlers.clear()
 
@@ -33,18 +34,18 @@ def setup_logger(log_path: str) -> logging.Logger:
     datefmt = "%Y-%m-%dT%H:%M:%S"
     formatter = logging.Formatter(fmt, datefmt=datefmt)
 
-    ch = logging.StreamHandler()
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
+    console_handler = logging.StreamHandler()
+    console_handler.setFormatter(formatter)
+    logger.addHandler(console_handler)
 
-    fh = RotatingFileHandler(
+    file_handler = RotatingFileHandler(
         log_path,
         maxBytes=5_000_000,
         backupCount=3,
         encoding="utf-8",
     )
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
 
     return logger
 
