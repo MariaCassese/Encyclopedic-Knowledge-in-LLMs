@@ -12,9 +12,16 @@ from utils.utils import prompt_requires_image
 
 
 def setup_logger(log_path: str) -> logging.Logger:
-    """
-    Configure a logger that writes to log_path and rotates when size exceeds
-    maxBytes, keeping up to backupCount archived files.
+    """ 
+        Configure the application logger. 
+        Logs are written both to stdout and to a rotating log file. 
+        The file is rotated when it exceeds 5 MB, keeping up to three backups. 
+        
+        Args: 
+            log_path: Path to the log file. 
+        
+        Returns: 
+            Configured logger instance. 
     """
     logger = logging.getLogger("ModelEval")
     logger.setLevel(logging.INFO)
